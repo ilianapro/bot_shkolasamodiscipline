@@ -1,0 +1,86 @@
+.bg-secondary, .footer {
+ background: #003c7c !important;
+}
+.btn-primary {
+    background: #003c7c !important;
+    border-color: #003c7c !important;
+}
+
+.bg-primary {
+    background: #2AB1DE !important;
+}
+.floating-label-form-group-with-focus label {
+    color: #ff8000;
+}
+.portfolio-item {
+    border: 3px solid #003c7c;
+    height: 270px;
+    padding: 20px;
+}
+.portfolio .portfolio-item .portfolio-item-caption {
+    background: #ff8000;
+}
+#mainNav .navbar-nav>li.nav-item>a.nav-link.active {
+    background: #ff8000;
+}
+#mainNav .navbar-nav>li.nav-item>a.nav-link.active:active, #mainNav .navbar-nav>li.nav-item>a.nav-link.active:focus, #mainNav .navbar-nav>li.nav-item>a.nav-link.active:hover {
+    background: #ff8000;
+}
+#mainNav .navbar-nav li.nav-item a.nav-link:hover, .success-star {
+    color: #ff8000;
+}
+a.bg-primary:focus, a.bg-primary:hover, button.bg-primary:focus, button.bg-primary:hover {
+    background: #ff8000 !important;
+}
+.bg-gray {
+    background: #e9ecef;
+}
+.lead a {
+    color: #fff;
+    font-weight: 600;
+}
+.diagram-item {
+    padding: 20px 0;
+}
+.report-title {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 900;
+}
+.report-description {
+    text-align: center;
+    font-size: 0.9rem;
+    color: grey;
+}
+.masthead .masthead-heading {
+    font-size: 1.5rem;
+}
+.reporter-group {
+    text-align: center;
+    font-size: 0.9rem;
+    color: gray;
+}
+h4 {
+    margin-bottom: 0;
+}
+.reporter-image {
+    margin-bottom: 1.2rem;
+}
+.border-orange {
+    border-color: #ff8000 !important;
+}
+.border-blue {
+    border-color: #003c7c !important;
+}
+.report1_photo {
+    max-height: 200px;
+}
+.btn-modal {
+    margin-top: 2rem;
+}
+.modal-body h4 {
+    margin-top: 2rem;
+}
+.modal-body .taskList {
+    text-align: left;
+}
