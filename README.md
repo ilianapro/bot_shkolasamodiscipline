@@ -1,25 +1,41 @@
-<p align="center"><img height="188" width="198" src="https://botman.io/img/botman.png"></p>
-<h1 align="center">BotMan Studio</h1>
+<p align="center"><img height="188" width="198" src="https://thumb.cloud.mail.ru/weblink/thumb/xw1/3yQ4/5g3m662FE/telegram_bot_avatar.jpg?x-email=ilias555%40mail.ru"></p>
+<h1 align="center">Bot for Shkola Samodiscipline</h1>
 
-## About BotMan Studio
+## About Bot of Shkola Samodiscipline
 
-While BotMan itself is framework agnostic, BotMan is also available as a bundle with the great [Laravel](https://laravel.com) PHP framework. This bundled version is called BotMan Studio and makes your chatbot development experience even better. By providing testing tools, an out of the box web driver implementation and additional tools like an enhanced CLI with driver installation, class generation and configuration support, it speeds up the development significantly.
+Here will be description/philosophy of this application.
 
-## Documentation
+## How to install application
 
-You can find the BotMan and BotMan Studio documentation at [http://botman.io](http://botman.io).
+Here will be instruction of how to install this application.
 
-## Support the development
-**Do you like this project? Support it by donating**
+## Which patform, applications, libraries used in this project
+**the list of applications:**
 
-- PayPal: [Donate](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=m%2epociot%40googlemail%2ecom&lc=CY&item_name=BotMan&no_note=0&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest)
-- Patreon: [Donate](https://www.patreon.com/botman)
+- Laravel Framework, https://laravel.com/
+- Botman, https://botman.io/
+- Bootstrap, https://getbootstrap.com/
+- JQuery, https://jquery.com/
+- ChartJS, https://jquery.com/
 
-## Security Vulnerabilities
+## Application Live URL
 
-If you discover a security vulnerability within BotMan or BotMan Studio, please send an e-mail to Marcel Pociot at m.pociot@gmail.com. All security vulnerabilities will be promptly addressed.
+**BOT 1**
+Web: https://bot1.shkolasamodisipline.com/
+Telegram Bot: @shkolasamodiscipline_bot1_bot
+
+**BOT 2**
+Web: https://bot2.shkolasamodisipline.com/
+Telegram Bot: @shkolasamodiscipline_bot2_bot
+
+**BOT 3**
+Web: https://bot3.shkolasamodisipline.com/
+Telegram Bot: @shkolasamodiscipline_bot3_bot
+
+**BOT Free**
+Web: https://botfree.shkolasamodisipline.com/
+Telegram Bot: @shkolasamodiscipline_botfree_bot
 
 ## License
 
-BotMan is free software distributed under the terms of the MIT license.
-
+This application was ordered by www.shkolasamodiscipline.com, If you wish to use in your project, please contact with them.
