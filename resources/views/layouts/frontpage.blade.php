@@ -14,12 +14,12 @@
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
   {{-- Theme CSS --}}
-  <link href="css/freelancer.min.css" rel="stylesheet">
-  <link href="css/frontpage-custom.css" rel="stylesheet">
+  <link href="/css/freelancer.min.css" rel="stylesheet">
+  <link href="/css/frontpage-custom.css" rel="stylesheet">
   {{-- Unit Gallery CSS --}}
-  <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
   <link rel='stylesheet' href='/unitegallery/css/unite-gallery.css' type='text/css' /> 
   <link rel='stylesheet' href='/unitegallery/themes/default/ug-theme-default.css' type='text/css' /> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.css">
 </head>
 <body id="page-top">
   <!-- Navigation -->
@@ -58,9 +58,12 @@
   <header class="masthead bg-primary text-white text-center">
     <div class="container d-flex align-items-center flex-column">
       <!-- Masthead Avatar Image -->
-      <img class="masthead-avatar mb-5" src="img/front-logo.png" alt="">
+      <img class="masthead-avatar mb-5" src="/img/front-logo.png" alt="">
       <!-- Masthead Heading -->
       <h1 class="masthead-heading text-uppercase mb-0">САМОДИСЦИПЛИНА</h1>
+      <div class="wrapper">
+          <i class="fas fa-chevron-circle-left cursor" id="dt_back"></i> <input type="text" class="dateselect text-center" value="{{ Carbon\Carbon::parse($data['details']['date'])->format('d.m.Y') }}" required="required"/> <i class="fas fa-chevron-circle-right cursor" id="dt_frwrd"></i>
+      </div>
       <!-- Icon Divider -->
       <div class="divider-custom divider-light">
         <div class="divider-custom-line"></div>
@@ -79,6 +82,7 @@
     <div class="container">
       <!-- Portfolio Section Heading -->
       <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">СПИСОК</h2>
+      <h6 class="text-center text-uppercase text-secondary">{{ $data['details']['reporters']->count() }} участников на дату {{Carbon\Carbon::parse($data['details']['date'])->format('d.m.Y')}}</h6>
       <!-- Icon Divider -->
       <div class="divider-custom">
         <div class="divider-custom-line"></div>
@@ -91,7 +95,7 @@
       <div class="row">
 
         <!-- Portfolio Item 1 -->
-        @foreach ($data['reporters'] as $reporter)
+        @foreach ($data['details']['reporters'] as $reporter)
             
         <div class="col-md-6 col-lg-4">
           <div class="portfolio-item mx-auto {{$res = (($reporter->report1_dt) && ($reporter->report2_dt) && ($reporter->report3_dt)) ? 'border-orange' : 'border-blue'}}" data-toggle="modal" data-target="#portfolioModal{{$reporter->id}}">
@@ -101,7 +105,7 @@
               </div>
             </div>
             <div>
-              <img src="{{ $reporter->avatar ? "$reporter->avatar" : "/img/participant-icon.png" }}" class="rounded-circle mx-auto d-block reporter-image" alt="" width="100px">
+              <img src="{{ $reporter->avatar ? "$reporter->avatar" : "/img/icon-participant.png" }}" class="rounded-circle mx-auto d-block reporter-image" alt="" width="100px">
               <div class="text-center"><h4>{{ $reporter->name }} {{ $reporter->leader ? "️️️️⭐️" : "" }}</h4></div>
               <div class="reporter-group">{{ $reporter->group }}</div>
               <div class="text-center">
@@ -148,7 +152,7 @@
 
   <section class="page-section" id="leaders">
     <div class="container">
-      <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">ЛИДЕРЫ</h2>
+      <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">ЛИДЕРЫ</h2><h4 class="text-center text-secondary">{{ $data['leaders']->date }}</h4>
       <div class="divider-custom">
         <div class="divider-custom-line"></div>
         <div class="divider-custom-icon">
@@ -156,7 +160,213 @@
         </div>
         <div class="divider-custom-line"></div>
       </div>
-      <div class="text-center">Эта секция в разработке</div>
+      <div class="text-center"><h4>Номинации участника</h4></div>
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="leader">
+            <div class="leader-item mx-auto border-blue">
+              <div class="text-center text-orange"><h6>ДЕНЬГИ<br>ЗА ДЕНЬ</h6></div>
+                <div>
+                @if($data['leaders']->reporter_money_max->status == 'bad')
+                  <img src="/img/icon-question.png" class="rounded-circle mx-auto d-block reporter-image" alt="" width="100px">
+                  <div class="text-center"><h4>Никто не выделился</h4></div>
+                  <div class="reporter-group">{{Carbon\Carbon::parse($data['leaders']->reporter_money_max->date)->format('d.m.Y')}}</div>
+                @else
+                  <img src="{{ $data['leaders']->reporter_money_max->avatar ?  $data['leaders']->reporter_money_max->avatar : '/img/icon-participant.png'}}" class="rounded-circle mx-auto d-block reporter-image" alt="" width="100px">
+                  <div class="text-center"><h4>{{ $data['leaders']->reporter_money_max->status == 'bad' ? 'Никто не выделился' :  $data['leaders']->reporter_money_max->name }}</h4></div>
+                  <div class="reporter-group">{{ $data['leaders']->reporter_money_max->status == 'bad' ? '' :  number_format($data['leaders']->reporter_money_max->sum, 2, ',', ' ') }} KGS</div>
+                  <div class="reporter-group">{{Carbon\Carbon::parse($data['leaders']->reporter_money_max->date)->format('d.m.Y')}}</div>
+                @endif
+                </div>
+             </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="leader">
+              <div class="leader-item mx-auto border-blue">
+                  <div class="text-center text-orange"><h6>ДЕНЬГИ<br>ЗА НЕДЕЛЮ</h6></div>
+                  <div>
+                    @if($data['leaders']->reporter_money_max_7days->status == 'bad')
+                      <img src="/img/icon-question.png" class="rounded-circle mx-auto d-block reporter-image" alt="" width="100px">
+                      <div class="text-center"><h4>Никто не выделился</h4></div>
+                      <div class="reporter-group">Приложите усилия и вы можете оказаться здесь</div>
+                      <div class="reporter-group">{{Carbon\Carbon::parse($data['leaders']->reporter_money_max_7days->date_start)->format('d.m.Y')}} - {{Carbon\Carbon::parse($data['leaders']->reporter_money_max_7days->date_end)->format('d.m.Y')}}</div>
+                    @else
+                      <img src="{{ $data['leaders']->reporter_money_max_7days->avatar ?  $data['leaders']->reporter_money_max_7days->avatar : '/img/icon-participant.png'}}" class="rounded-circle mx-auto d-block reporter-image" alt="" width="100px">
+                      <div class="text-center"><h4>{{ $data['leaders']->reporter_money_max_7days->name }}</h4></div>
+                      <div class="reporter-group">{{ number_format($data['leaders']->reporter_money_max_7days->sum, 2, ',', ' ') }} KGS</div>
+                      <div class="reporter-group">{{Carbon\Carbon::parse($data['leaders']->reporter_money_max_7days->date_start)->format('d.m.Y')}} - {{Carbon\Carbon::parse($data['leaders']->reporter_money_max_7days->date_end)->format('d.m.Y')}}</div>
+                    @endif
+                  </div>
+              </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="leader">
+              <div class="leader-item mx-auto border-blue">
+                  <div class="text-center text-orange"><h6>ДИСЦИПЛИННИРОВАННЫЙ<br>УЧАСТНИК</h6></div>
+                  <div>
+                    @if($data['leaders']->reporter_discipline->status == 'bad')
+                      <img src="/img/icon-question.png" class="rounded-circle mx-auto d-block reporter-image" alt="" width="100px">
+                      <div class="text-center"><h4>Никто не выделился</h4></div>
+                      <div class="reporter-group">Приложите усилия и вы можете оказаться здесь</div>
+                      <div class="reporter-group">{{Carbon\Carbon::parse($data['leaders']->reporter_discipline->date)->format('d.m.Y')}}</div>
+                    @else
+                    <img src="{{ $data['leaders']->reporter_discipline->avatar ?  $data['leaders']->reporter_discipline->avatar : '/img/icon-participant.png'}}" class="rounded-circle mx-auto d-block reporter-image" alt="" width="100px">
+                    <div class="text-center"><h4>{{ $data['leaders']->reporter_discipline->name }}</h4></div>
+                    <div class="reporter-group">{{ Carbon\Carbon::parse($data['leaders']->reporter_discipline->date)->format('d.m.Y') }}</div>
+                    @endif
+                  </div>
+              </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="text-center head-title"><h4>Дисциплина участников за неделю</h4></div>
+    <div class="row">
+      @if($data['leaders']->reporters_discipline_7days->status == 'bad')
+      <div class="col-lg-4">
+        <div class="leader">
+          <div class="leader-item mx-auto border-blue">
+              <div>
+                <img src="/img/icon-question.png" class="rounded-circle mx-auto d-block reporter-image" alt="" width="100px">
+                <div class="text-center"><h4>Никто не выделился</h4></div>
+                <div class="reporter-group">Приложите усилия и вы можете оказаться здесь</div>
+                <div class="reporter-group">{{Carbon\Carbon::parse($data['leaders']->reporters_discipline_7days->date_start)->format('d.m.Y')}} - {{Carbon\Carbon::parse($data['leaders']->reporters_discipline_7days->date_end)->format('d.m.Y')}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      @else
+          @foreach($data['leaders']->reporters_discipline_7days->reporter_good_list as $reporter)
+          <div class="col-lg-4">
+            <div class="leader">
+              <div class="leader-item mx-auto border-blue">
+                  <div>
+                    <img src="{{ $reporter->avatar ?  $reporter->avatar : '/img/icon-participant.png'}}" class="rounded-circle mx-auto d-block reporter-image" alt="" width="100px">
+                    <div class="text-center"><h4>{{ $reporter->name }}</h4></div>
+                    <div class="reporter-group">{{Carbon\Carbon::parse($data['leaders']->reporters_discipline_7days->date_start)->format('d.m.Y')}} - {{Carbon\Carbon::parse($data['leaders']->reporters_discipline_7days->date_end)->format('d.m.Y')}}</div>
+                  </div>
+              </div>
+            </div>
+          </div>
+          @endforeach
+      @endif
+  </div>
+  <div class="text-center head-title"><h4>Номинации групп</h4></div>
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="leader">
+          <div class="leader-item mx-auto border-blue">
+            <div class="text-center text-orange"><h6>ДЕНЬГИ ЗА ДЕНЬ</h6></div>
+              <div>
+                @if($data['leaders']->group_money_max->status == 'bad')
+                  <img src="/img/icon-question.png" class="rounded-circle mx-auto d-block reporter-image" alt="" width="100px">
+                  <div class="text-center"><h4>Никто не выделился</h4></div>
+                  <div class="reporter-group">Приложите усилия и вы можете оказаться здесь</div>
+                  <div class="reporter-group">{{Carbon\Carbon::parse($data['leaders']->group_money_max->date)->format('d.m.Y')}}</div>
+                @else
+                  <img src="/img/icon-group.png" class="rounded-circle mx-auto d-block reporter-image" alt="" width="100px">
+                  <div class="text-center"><h4>{{ $data['leaders']->group_money_max->name }}</h4></div>
+                  <div class="reporter-group">{{ number_format($data['leaders']->group_money_max->sum, 2, ',', ' ') }} KGS</div>
+                  <div class="reporter-group">{{Carbon\Carbon::parse($data['leaders']->group_money_max->date)->format('d.m.Y')}}</div>
+                @endif
+              </div>
+           </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+          <div class="leader">
+            <div class="leader-item mx-auto border-blue">
+                <div class="text-center text-orange"><h6>ДЕНЬГИ ЗА НЕДЕЛЮ</h6></div>
+                <div>
+                  @if($data['leaders']->group_money_max_7days->status == 'bad')
+                    <img src="/img/icon-question.png" class="rounded-circle mx-auto d-block reporter-image" alt="" width="100px">
+                    <div class="text-center"><h4>Никто не выделился</h4></div>
+                    <div class="reporter-group">Приложите усилия и вы можете оказаться здесь</div>
+                    <div class="reporter-group">{{Carbon\Carbon::parse($data['leaders']->group_money_max_7days->date_start)->format('d.m.Y')}} - {{Carbon\Carbon::parse($data['leaders']->group_money_max_7days->date_end)->format('d.m.Y')}}</div>
+                  @else
+                    <img src="/img/icon-group.png" class="rounded-circle mx-auto d-block reporter-image" alt="" width="100px">
+                    <div class="text-center"><h4>{{ $data['leaders']->group_money_max_7days->name }}</h4></div>
+                    <div class="reporter-group">{{ number_format($data['leaders']->group_money_max_7days->sum, 2, ',', ' ') }} KGS</div>
+                    <div class="reporter-group">{{Carbon\Carbon::parse($data['leaders']->group_money_max_7days->date_start)->format('d.m.Y')}} - {{Carbon\Carbon::parse($data['leaders']->group_money_max_7days->date_end)->format('d.m.Y')}}</div>
+                  @endif
+                </div>
+            </div>
+        </div>
+      </div>
+  </div>
+
+
+
+  <div class="text-center head-title"><h4>ДИСЦИПЛИНИРОВАННОСТЬ ГРУПП</h4></div>
+  <div class="text-center head-title"><h6>ЗА ДЕНЬ {{$data['leaders']->date}}</h6></div>
+  <div class="row">
+    @if ($data['leaders']->groups_discipline->status == "ok")
+      @foreach ($data['leaders']->groups_discipline->discipline as $group)
+        <div class="col-lg-4">
+          <div class="leader">
+            <div class="leader-item mx-auto border-blue">
+                <div>
+                  <img src="/img/icon-group.png" class="rounded-circle mx-auto d-block reporter-image" alt="" width="100px">
+                  <div class="text-center"><h4>{{ $group }}</h4></div>
+                  <div class="reporter-group">{{Carbon\Carbon::parse($data['leaders']->groups_discipline->date)->format('d.m.Y')}}</div>
+                </div>
+            </div>
+          </div>
+        </div>
+      @endforeach
+      @else
+      <div class="col-lg-4">
+          <div class="leader">
+            <div class="leader-item mx-auto border-blue">
+                <div>
+                  <img src="/img/icon-question.png" class="rounded-circle mx-auto d-block reporter-image" alt="" width="100px">
+                  <div class="text-center"><h4>Никто не выделился</h4></div>
+                  <div class="reporter-group">Приложите усилия и вы можете оказаться здесь</div>
+                  <div class="reporter-group">{{Carbon\Carbon::parse($data['leaders']->groups_discipline->date)->format('d.m.Y')}}</div>
+                </div>
+            </div>
+          </div>
+        </div>
+    @endif
+
+</div>
+
+
+<div class="text-center head-title"><h6>ЗА НЕДЕЛЮ</h6></div>
+<div class="row">
+  @if ($data['leaders']->groups_discipline_7days->status == "ok")
+    @foreach ($data['leaders']->groups_discipline_7days->discipline as $group)
+      <div class="col-lg-4">
+        <div class="leader">
+          <div class="leader-item mx-auto border-blue">
+              <div>
+                <img src="/img/icon-group.png" class="rounded-circle mx-auto d-block reporter-image" alt="" width="100px">
+                <div class="text-center"><h4>{{ $group }}</h4></div>
+                <div class="reporter-group">{{Carbon\Carbon::parse($data['leaders']->groups_discipline_7days->date_start)->format('d.m.Y')}} - {{Carbon\Carbon::parse($data['leaders']->groups_discipline_7days->date_end)->format('d.m.Y')}}</div>
+              </div>
+          </div>
+        </div>
+      </div>
+    @endforeach
+    @else
+    <div class="col-lg-4">
+        <div class="leader">
+          <div class="leader-item mx-auto border-blue">
+              <div>
+                <img src="/img/icon-question.png" class="rounded-circle mx-auto d-block reporter-image" alt="" width="100px">
+                <div class="text-center"><h4>Никто не выделился</h4></div>
+                <div class="reporter-group">Приложите усилия и вы можете оказаться здесь</div>
+                <div class="reporter-group">{{Carbon\Carbon::parse($data['leaders']->groups_discipline_7days->date_start)->format('d.m.Y')}} - {{Carbon\Carbon::parse($data['leaders']->groups_discipline_7days->date_end)->format('d.m.Y')}}</div>
+              </div>
+          </div>
+        </div>
+      </div>
+  @endif
+
+</div>
+
     </div>
   </section>
 
@@ -170,10 +380,10 @@
         </div>
         <div class="divider-custom-line"></div>
       </div>
-      @if ($data['report1_count'])
+      @if ($data['details']['report1_count'])
 
       <div id="reporter_gallery" style="display:none;">
-          @foreach ($data['reporters'] as $key => $reporter)
+          @foreach ($data['details']['reporters'] as $key => $reporter)
             @if ($reporter->report1_photo_url)
               <img alt="{{ $reporter->name }} ({{ Carbon\Carbon::parse($reporter->report1_dt)->format('H:i')}})" src="{{$reporter->report1_photo_url}}"
               data-image="{{$reporter->report1_photo_url}}"
@@ -183,7 +393,20 @@
         </div>
 
       @else
-          <div class="text-center">К сожалению еще никто не сдал утренний отчет.</div>
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="leader bg-white">
+            <div class="leader-item mx-auto border-blue">
+              <div>
+                <img src="/img/icon-question.png" class="rounded-circle mx-auto d-block reporter-image" alt="" width="100px">
+                <div class="text-center"><h4>Никто не сдал утренний Отчет №1</h4></div>
+                <div class="reporter-group">Приложите усилия и вы можете оказаться первым</div>
+                <div class="reporter-group">{{Carbon\Carbon::parse($data['details']['date'])->format('d.m.Y')}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       @endif
     </div>
   </section>
@@ -328,7 +551,7 @@
 
 
   <!-- Portfolio Modal 1 -->
-  @foreach ($data['reporters'] as $key => $reporter)
+  @foreach ($data['details']['reporters'] as $key => $reporter)
   <div class="portfolio-modal modal fade" id="portfolioModal{{$reporter->id}}" tabindex="-1" role="dialog" aria-labelledby="portfolioModal1Label" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
       <div class="modal-content">
@@ -393,6 +616,9 @@
   <!-- Bootstrap core JavaScript -->
   <script src="/js/jquery.min.js"></script>
   <script src="/js/bootstrap.min.js"></script>
+
+  <script type='text/javascript' src='/js/jquery.min.js'></script>
+  <script type='text/javascript' src="/js/jquery-ui.min.js"></script>
   
   {{-- Unit Gallery --}}
   <script type='text/javascript' src='/unitegallery/js/unitegallery.min.js'></script> 
@@ -407,11 +633,17 @@
   <!-- Contact Form JavaScript -->
   <script src="/js/jqBootstrapValidation.js"></script>
   <script src="/js/contact_me.js"></script>
-
+  
+  <!-- DatePicker -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+  <script type="text/javascript" src="/js/datepicker-ru.js"></script>
+  <script src="/js/moment.js"></script>
+  
   <!-- Custom scripts for this template -->
-  <script src="js/freelancer.min.js"></script>
+  <script src="/js/freelancer.min.js"></script>
 
   <script>
+      $(document).ready(function(){
           var ctx = document.getElementById('report-chart1').getContext('2d');
             var chart = new Chart(ctx, {
                 type: 'doughnut',
@@ -420,7 +652,7 @@
                     datasets: [{
                         label: 'Отчет 1',
                         backgroundColor: ['#ff8000', '#003c7c'],
-                        data: [{{ $data['report1_count'] }}, {{$data['reporters']->count() - $data['report1_count']}}]
+                        data: [{{ $data['details']['report1_count'] }}, {{$data['details']['reporters']->count() - $data['details']['report1_count']}}]
                     }]
                 },
                 options: {
@@ -435,7 +667,7 @@
                     datasets: [{
                         label: 'Отчет 1',
                         backgroundColor: ['#ff8000', '#003c7c'],
-                        data: [{{ $data['report2_count'] }}, {{$data['reporters']->count() - $data['report2_count']}}]
+                        data: [{{ $data['details']['report2_count'] }}, {{$data['details']['reporters']->count() - $data['details']['report2_count']}}]
                     }]
                 },
                 options: {
@@ -450,13 +682,28 @@
                     datasets: [{
                         label: 'Отчет 1',
                         backgroundColor: ['#ff8000', '#003c7c'],
-                        data: [{{ $data['report3_count'] }}, {{$data['reporters']->count() - $data['report3_count']}}]
+                        data: [{{ $data['details']['report3_count'] }}, {{$data['details']['reporters']->count() - $data['details']['report3_count']}}]
                     }]
                 },
                 options: {
                   animation: {animateScale: true}
                 }
           });
+
+          $("#dt_back").click(function(){
+              var dt = $(".dateselect").val();
+              window.open("{{$data['app_url']}}/date/" + moment(dt,("DD.MM.YYYY")).add(-1,"days").format("YYYY-MM-DD"),'_self');
+          });
+          $("#dt_frwrd").click(function(){
+            var dt = $(".dateselect").val();
+            if (moment().diff(moment(dt,"DD.MM.YYYY")) > 0){
+              window.open("{{$data['app_url']}}/date/" + moment(dt,("DD.MM.YYYY")).add(1,"days").format("YYYY-MM-DD"),'_self');
+            }
+            else {
+              alert('bad');              
+            }
+        });
+
           
 
           jQuery("#reporter_gallery").unitegallery({
@@ -465,8 +712,15 @@
             tile_textpanel_always_on:true,
           });
 
-          
-          </script>
+          $('.dateselect').datepicker({
+            endDate: new Date(),
+            format: 'dd.mm.yyyy',
+          }).bind('changeDate', function(e,changeDate){
+            var converted_dt = $('.dateselect').val().split('.');
+            window.open("{{$data['app_url']}}/date/" + converted_dt[2] + '-' + converted_dt[1] + '-' + converted_dt[0],'_self');
+        });
+        });
+
   </script>
 
 </body>

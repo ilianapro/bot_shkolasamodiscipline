@@ -11,7 +11,12 @@
 |
 */
 
+use App\Http\Controllers\frontpageController;
+
+Route::get('/testik','frontpageController@testik');
+
 Route::get('/', 'frontpageController@index');
+Route::get('/date/{date}', 'frontpageController@indexdate');
 
 Route::match(['get', 'post'], '/botman', 'BotManController@handle');
 //Route::get('/botman/tinker', 'BotManController@tinker');
