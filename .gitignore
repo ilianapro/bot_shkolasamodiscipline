@@ -10,3 +10,6 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 .env
+
+#Except bellow files
+!.env.example
