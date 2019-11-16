@@ -135,13 +135,14 @@ location / {
 By following command create database and user, assign user for access to the Dtaabase:
 
 ```
-CREATE DATABASE `samo_bot1`
+CREATE DATABASE `samo_bot1`;
 CREATE USER 'samo_bot1'@'localhost' IDENTIFIED BY 'yourpassword';
 GRANT USAGE ON *.* TO 'samo_bot1'@'localhost';
 GRANT EXECUTE, SELECT, SHOW VIEW, ALTER, ALTER ROUTINE, CREATE, CREATE ROUTINE, CREATE TEMPORARY TABLES, CREATE VIEW, DELETE, DROP, EVENT, INDEX, INSERT, REFERENCES, TRIGGER, UPDATE, LOCK TABLES  ON `samo_bot1`.* TO 'samo_bot1'@'localhost' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 SHOW GRANTS FOR 'samo_bot1'@'localhost';
 ```
+Note: here some bug in sql code, I am usually create it by GUI - HeidiSql
 
 **Install Source Code**
 
