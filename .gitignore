@@ -1,7 +1,5 @@
 /node_modules
 /public/hot
-/public/avatars
-/public/report1
 /public/storage
 /storage/*.key
 /vendor

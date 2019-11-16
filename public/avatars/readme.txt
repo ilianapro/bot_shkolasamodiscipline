@@ -1,0 +1,1 @@
+Avatar folder is created to store Participants avatars
