@@ -18,19 +18,19 @@ This solution is help use Telegram Bot and Online Web Resource to Control Group 
 ## Application Live URL
 
 **BOT 1**
-Web: https://bot1.shkolasamodisipline.com/
+Web: https://bot1.shkolasamodiscipline.com/
 Telegram Bot: @shkolasamodiscipline_bot1_bot
 
 **BOT 2**
-Web: https://bot2.shkolasamodisipline.com/
+Web: https://bot2.shkolasamodiscipline.com/
 Telegram Bot: @shkolasamodiscipline_bot2_bot
 
 **BOT 3**
-Web: https://bot3.shkolasamodisipline.com/
+Web: https://bot3.shkolasamodiscipline.com/
 Telegram Bot: @shkolasamodiscipline_bot3_bot
 
 **BOT Free**
-Web: https://botfree.shkolasamodisipline.com/
+Web: https://botfree.shkolasamodiscipline.com/
 Telegram Bot: @shkolasamodiscipline_botfree_bot
 
 
