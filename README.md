@@ -130,6 +130,19 @@ location / {
 }
 ```
 
+**Create MySql Database for Project**
+
+By following command create database and user, assign user for access to the Dtaabase:
+
+```
+CREATE DATABASE `samo_bot1`
+CREATE USER 'samo_bot1'@'localhost' IDENTIFIED BY 'yourpassword';
+GRANT USAGE ON *.* TO 'samo_bot1'@'localhost';
+GRANT EXECUTE, SELECT, SHOW VIEW, ALTER, ALTER ROUTINE, CREATE, CREATE ROUTINE, CREATE TEMPORARY TABLES, CREATE VIEW, DELETE, DROP, EVENT, INDEX, INSERT, REFERENCES, TRIGGER, UPDATE, LOCK TABLES  ON `samo_bot1`.* TO 'samo_bot1'@'localhost' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+SHOW GRANTS FOR 'samo_bot1'@'localhost';
+```
+
 **Install Source Code**
 
 By following code pull the source code from GitHub:
@@ -145,31 +158,12 @@ mv bot_shkolasamodiscipline/.* ./
 
 Rename Environment file:
 ```
-mv example.env .env
+mv .env.example .env
 ```
 
 **Pull all application dependencies**
 ```
 composer update
-```
-
-**Update Application Key**
-```
-php artisan key:generate
-```
-
-
-**Create MySql Database for Project**
-
-By following command create database and user, assign user for access to the Dtaabase:
-
-```
-CREATE DATABASE `samo_bot1`
-CREATE USER 'samo_bot1'@'localhost' IDENTIFIED BY 'yourpassword';
-GRANT USAGE ON *.* TO 'samo_bot1'@'localhost';
-GRANT EXECUTE, SELECT, SHOW VIEW, ALTER, ALTER ROUTINE, CREATE, CREATE ROUTINE, CREATE TEMPORARY TABLES, CREATE VIEW, DELETE, DROP, EVENT, INDEX, INSERT, REFERENCES, TRIGGER, UPDATE, LOCK TABLES  ON `samo_bot1`.* TO 'samo_bot1'@'localhost' WITH GRANT OPTION;
-FLUSH PRIVILEGES;
-SHOW GRANTS FOR 'samo_bot1'@'localhost';
 ```
 
 **Edit Environment File**
@@ -201,6 +195,12 @@ ADMIN2_EMAIL=
 ADMIN2_PASSWORD=
 ```
 
+**Update Application Key**
+```
+php artisan key:generate
+```
+
+
 **Generate SSL Certificate from Let's Encrypt Service**
 ```
 sudo certbot -d bot1.shkolasamodiscipline.com --nginx
@@ -230,6 +230,29 @@ php artisan db:seed --class=GroupsSeeder
 **Register Telegram**
 ```
 php artisan botman:telegram:register
+```
+When ask the URL, enter by following format: 
+```
+https://boturl.shkolasamodiscipline.com/botman
+```
+
+**How to check if all works**
+
+Onlinse resource is availbale by following URL:
+https://boturl.shkolasamodiscipline.com/
+
+Control Admin Panel is available by following URL: 
+https://boturl.shkolasamodiscipline.com/admin/
+
+Telegram should be available by following resource:
+https://t.me/yourtelegrambotname_bot
+
+
+
+**Fix Folder Permission Issue**
+```
+sudo chmod -R 775 storage
+sudo chown -R nginx. storage
 ```
 
 **DONE**
