@@ -21,7 +21,7 @@ class UsersTableSeeder extends Seeder
             'name' => env('ADMIN2_NAME'),
             'email' => env('ADMIN2_EMAIL'),
             'password' => bcrypt(env('ADMIN2_PASSWORD')),
-        ],
+        ]
     );
 
             
